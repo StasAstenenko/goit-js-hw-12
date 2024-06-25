@@ -13,6 +13,7 @@ const inputElem = formElem.querySelector('.input-search');
 const loadElem = document.querySelector('.loader')
 const listElem = document.querySelector('.img-list');
 const loadBtn = document.querySelector('.load');
+const liElem = document.querySelector('.liElem');
 
 let currentPage = 1;
 
