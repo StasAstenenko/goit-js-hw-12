@@ -13,14 +13,7 @@ formElem.addEventListener('submit', e => {
     listElem.innerHTML = '';
     currentPage = 1;
     hideLoadBtn();
-    if (inputElem.value.trim() === '') {
-        hideLoadBtn();
-        return;
-    } else {
-        createTemplate(inputElem.value.trim(), currentPage);
-        showLoadBtn();
-    }
-    loadElem.classList.add('visually-hidden');
+    clickBtn()
 });
 
 loadBtn.addEventListener('click', () => {
@@ -29,11 +22,19 @@ loadBtn.addEventListener('click', () => {
     clickBtn();
 });
 
-function clickBtn() {
-    createTemplate(inputElem.value.trim(), currentPage).then(() => {
-        scrollToNewImages()
-        showLoadBtn();
-    });
+async function clickBtn() {
+    if (inputElem.value.trim() === '') {
+        hideLoadBtn();
+        return;
+    } else {
+        const success = await createTemplate(inputElem.value.trim(), currentPage);
+        if (success) {
+            showLoadBtn();
+            scrollToNewImages();
+        } else {
+            hideLoadBtn();
+        }
+    }
     loadElem.classList.add('visually-hidden');
 }
 
