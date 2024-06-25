@@ -23,10 +23,11 @@ export async function createTemplate(searchQuery, currentPage) {
                 message: 'Sorry, there are no images matching your search query. Please try again!',
                 position: 'topRight'
             })
-            return false;
+            return;
         }
     } catch (err) {
         console.log(err);
+        return;
     };
 
 }
