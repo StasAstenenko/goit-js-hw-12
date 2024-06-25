@@ -22,9 +22,11 @@ export async function searchPhoto(img, currentPage) {
         const { data } = await axios.get('');
         maxPage = data.totalHits / per_page;
         if (currentPage >= maxPage) {
-            iziToast.info({
+            if (maxPage) {
+                iziToast.info({
                 message: "We're sorry, but you've reached the end of search results.",
             });
+           }
             hideLoadBtn();
         };
         return data.hits; 
