@@ -1,9 +1,4 @@
 import Axios from "axios";
-import iziToast from "izitoast";
-import { hideLoadBtn } from "../main";
-
-const per_page = 15;
-let maxPage = 1;
 
 export async function searchPhoto(img, currentPage) {
     const axios = Axios.create({
@@ -14,22 +9,13 @@ export async function searchPhoto(img, currentPage) {
             orientation: 'horizontal',
             q: `${img}`,
             safesearch: true,
-            per_page: per_page,
+            per_page: 15,
             page: currentPage,
         },
     });
     try {
-        const { data } = await axios.get('');
-        maxPage = data.totalHits / per_page;
-        if (currentPage >= maxPage) {
-            if (maxPage) {
-                iziToast.info({
-                message: "We're sorry, but you've reached the end of search results.",
-            });
-           }
-            hideLoadBtn();
-        };
-        return data.hits; 
+        const res  = await axios.get('');
+        return res.data; 
     } catch (err) {
         console.log(err);
     };      
