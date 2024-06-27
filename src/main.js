@@ -17,7 +17,7 @@ const loadBtn = document.querySelector('.load');
 let currentPage = 1;
 const per_page = 15;
 let maxPage = 1;
-const queryForLoadBtn = '';
+let search = '';
 
 formElem.addEventListener('submit', e => {
     e.preventDefault();
@@ -29,25 +29,25 @@ formElem.addEventListener('submit', e => {
             position: 'topRight', 
         });
     };
+    search = inputElem.value.trim();
     currentPage = 1;
     showLoader();
     hideLoadBtn();
-    createTemplate(inputElem.value.trim(), currentPage);
+    createTemplate(search, currentPage);
+    formElem.reset();
 });
 
 loadBtn.addEventListener('click', () => {
     currentPage++;
     showLoader();
     hideLoadBtn();
-    clickBtn(queryForLoadBtn, currentPage);
+    clickBtn(search, currentPage);
 });
 
 async function clickBtn(searchQuery, currentPage) {
     try {   
         const data = await searchPhoto(searchQuery, currentPage);
-        maxPage = Math.ceil(data.total / per_page);
         if (data.total === 0) {
-            hideLoader();
             showErr();
         }
         const markUp = imgTemplates(data.hits);
@@ -59,7 +59,6 @@ async function clickBtn(searchQuery, currentPage) {
     };
     updateStatus();
     hideLoader();
-    inputElem.value = '';
 }
 
 function showLoadBtn() {
@@ -98,7 +97,6 @@ async function createTemplate(searchQuery, currentPage) {
     };
     updateStatus();
     hideLoader();
-    inputElem.value = '';
 }
 
 function updateStatus() {
